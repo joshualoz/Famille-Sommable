@@ -1,0 +1,387 @@
+\documentclass[a4paper, 12pt]{report}
+\usepackage{amsfonts}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{setspace}
+\onehalfspacing
+%\makeatletter\@addtoreset{section}{chapter}\makeatother
+\renewcommand{\thepart}{\Roman{part}}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\usepackage [document] { ragged2e }
+\usepackage{amsthm}
+\usepackage{graphicx}
+\begin{document}
+Université Paris Cité 
+
+UFR mathématiques et informatique 
+
+Semestre 2 2023-2024
+
+
+\centering
+\vspace{50mm}
+\Large{Rapport de projet} \\ 
+\vspace{5mm}
+\textbf{---------------------------------------------------------------------}
+\title[\textbf{\Huge{Les familles sommables}} \\
+\textbf{---------------------------------------------------------------------}
+\vspace{3mm}
+
+
+\raggedright
+\textit{\normalsize{auteur :}}  \\
+%\RaggedLeft\textit{{\normalsize{encadrante :}}}
+\author[\normalsize{Joshua \textsc{Lozano}} \\ 
+
+
+
+\textit{\normalsize{encadrante :}}\\ 
+\author[\normalsize{Elisa \textsc{Couvert}}
+\newpage
+
+\begin{description}
+    \item[] 
+\end{description}
+    
+\section*{Avant propos}
+\setlength{\parindent}{2em} 
+\par La découverte des familles sommables a eu un impact significatif dans divers domaines des mathématiques, en particulier dans l'analyse fonctionnelle et la théorie des séries infinies. Voici quelques points clés sur l'intérêt de cette découverte :
+\begin{itemize}
+    \item \textbf{Analyse fonctionelle :}
+\end{itemize}
+Dans l'analyse fonctionnelle, les familles sommables jouent un rôle crucial. Les séries infinies et les espaces de Banach sont des concepts fondamentaux de cette branche des mathématiques. La sommabilité permet d'étudier les propriétés des séries infinies dans ces espaces et d'analyser les convergences. \\
+\textbf{\small{Espaces de Banach}} : Les familles sommables aident à définir et à étudier des espaces de Banach spécifiques, tels que les espaces $ l^p $ (où p, $1 \le p< \infty$), qui sont constitués de suites dont la p-ième puissance de la valeur absolue est sommable. \\
+\textbf{\small{Opérateurs linéaires}} : Dans l'analyse des opérateurs linéaires sur des espaces de Banach, la sommabilité est essentielle pour comprendre les séries de Fourier, les transformations intégrales et les solutions d'équations différentielles.
+\begin{itemize}
+    \item \textbf{Théorie des Séries Infinies :}
+\end{itemize}
+Les familles sommables fournissent un cadre formel pour traiter les séries infinies, ce qui est fondamental dans de nombreuses applications mathématiques et physiques comme, \\
+\textbf{\small{les séries de Fourier}} : La sommabilité est utilisée pour analyser la convergence des séries de Fourier, qui sont essentielles en analyse harmonique et en traitement du signal.
+Les familles sommables sont aussi utilisées pour : \\
+\textbf{\small{les séries de Dirichlet}} : Ces séries, qui apparaissent en théorie des nombres, utilisent des critères de sommabilité pour déterminer leurs propriétés de convergence et leurs applications en théorie analytique des nombres.\\
+
+
+\newpage
+\tableofcontents
+\section*{Table des matières
+
+\newpage
+\chapter{Projet : Familles sommables}
+\section{Introduction aux familles sommables}
+Etant donnée une famille finie de réels $(x_i)_{i\in I}$ , il est aisé de définir la somme $\Sigma_{i \in I} x_i $ de cette famille, comformément à notre intuition, en ajoutant les $x_i$ un par un dans n'importe quel ordre. Cependant, ce raisonnement là ne peut s'appliquer aux familles infinies, alors qu'en est-il des familles infinies ? Les séries nous montrent les problèmes liés non seulement à la convergence mais
+aussi à l'ordre de sommation (cas des séries semi-convergentes). Les familles sommables proposent un cadre agréable pour s'afranchir de ces contraintes.\\
+Considérons l'ensemble $\Sigma$ de nombres réels :
+$$\Sigma = \left\{ 1, -1, \frac{1}{2}, -\frac{1}{2}, \frac{1}{3}, -\frac{1}{3}, \frac{1}{4}, -\frac{1}{4}, \ldots \right\}.$$
+Il est clair que la somme des éléments de $\Sigma$ donne 0 :
+$$1 - 1 + \frac{1}{2} - \frac{1}{2} + \frac{1}{3} - \frac{1}{3} + \ldots = 0.$$
+Cependant, en changeant l'ordre de sommation, le résultat peut être différent. Par exemple, au lieu d'alterner un positif et un négatif, considérons la somme de deux positifs suivie d'un négatif :
+$$x = 1 + \frac{1}{2} - 1 + \frac{1}{3} + \frac{1}{4} - \frac{1}{2} + \frac{1}{5} + \frac{1}{6} - \frac{1}{3} + \ldots$$
+On peut montrer que cette série converge vers une valeur $x > 0$.
+
+Un autre exemple : en alternant 1 positif, 1 négatif, 2 positifs, 1 négatif, 3 positifs, 1 négatif, et ainsi de suite, on obtient :
+$$S_2 = 1 - 1 + \frac{1}{2} + \frac{1}{3} - \frac{1}{2} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6} - \frac{1}{3} + \frac{1}{7} + \frac{1}{8} + \frac{1}{9} + \frac{1}{10} - \frac{1}{4} + \ldots = +\infty.$$
+Cela montre que l'ordre de sommation est crucial pour déterminer le résultat final ! Pour tout nombre $x \in \mathbb{R} \cup \{+\infty, -\infty\}$, on peut prouver qu'il existe un ordre de sommation des éléments de $\Sigma$ qui donne $x$.
+
+En revanche, pour l'ensemble 
+$$\Sigma' = \left\{ 1, -1, \frac{1}{2^2}, -\frac{1}{2^2}, \frac{1}{3^2}, -\frac{1}{3^2}, \ldots \right\}$$
+le résultat suivant est vrai : quelle que soit la manière dont on somme les éléments de $\Sigma'$, on obtient 0.
+
+
+Ces deux exemples nous conduisent à une définition intuitive de la sommabilité d'une famille.
+Soit $\Sigma$ un ensemble de nombres réels. On dit que $\Sigma$ est sommable si, quelle que soit la façon dont on additionne ses éléments, le résultat est toujours identique.
+L'objectif de ce projet est d'explorer ce phénomène et de déterminer les conditions nécessaires pour qu'une famille de nombres $\Sigma$ soit sommable.
+
+\subsection{Quelques applications}
+\setlength{\parindent}{2em} 
+\centering 
+Soit  $S= 1 + \frac{1}{2} -1 + \frac{1}{3} + \frac{1}{4} -\frac{1}{2}$... \\
+\raggedright
+Nous avons S=$\lim_{n \to \infty} S_n$, avec $S_n=\Sigma U_k$. On sait d'autant plus que $U_k$ est de la forme : 
+\[ U_k = \alpha_k + \beta_k - \gamma_k \]
+
+Avec quelques calculs on trouve $U_k= \frac{1}{k+1} + \frac{1}{k+2} - \frac{1}{k}$. On remarque qu'avec un certain arrangement, comme on a pu le voir précédemment, cette somme tendrait vers l'infini. Or, en mettant tout sur le même dénominateur et en simplifiant, on trouve: \\
+\centering{$U_k \sim \frac{1}{4k^2}$}\\
+\raggedright
+Donc $U_k$ converge par Riemann (par comparaison de série de positive).
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Théorème de réarrangement de Riemann}
+\begin{document}
+\setlength{\parindent}{2em} 
+
+\par Dans cette section, nous allons présenter le théorème de réarrangement de Riemann. Ce théorème, nommé d'après le mathématicien allemand Bernhard Riemann, traite de la convergence conditionnelle des séries infinies. Il stipule que pour toute série conditionnellement convergente de nombres réels, il est possible de réarranger ses termes de manière à ce que la série converge vers n'importe quel nombre réel donné, ou même diverge vers $\infty$ ou $-\infty$. En d'autres termes, la somme d'une série conditionnellement convergente peut être changée par une réorganisation adéquate de ses termes. Nous explorerons ce théorème à l'aide d'un code en python pour illustrer sa portée.\\
+\newpage
+\begin{figure}[h]
+    \centering
+   \includegraphics[width=19cm, height=12cm]{Code.PNG}
+    \caption{Code du Théorème de réarrangement de Riemann}
+    \label{fig:Code Python.PNG}
+\end{figure}
+
+
+
+\begin{figure}[h]
+    \centering
+   \includegraphics[width=15cm, height=10cm]{Courbe des sommes partielles.PNG}
+    \caption{Exemple de résultat obtenue avec le code précédent}
+    \label{Courbe des sommes partielles.PNG}
+\end{figure}
+
+
+
+
+
+\newpage
+\section{Familles sommables et convergence absolue }
+\setlength{\parindent}{2em} 
+
+\par Considérons une suite ordonnée $Un$, où $n \geq 0$. La somme partielle de cette suite est définie par
+
+
+Comme mentionné auparavant, la limite de cette somme peut varier si la numérotation des termes $U_k$ est modifiée. Nous allons introduire une méthode de sommation indépendante de l'ordre des termes. Pour cela, commençons par examiner un ensemble fini.
+
+Soit $\Sigma \subset \mathbb{R}$ un ensemble fini. Si l'on attribue un indice à chaque élément de $\Sigma$, on peut exprimer la somme en notant $q$ le nombre d'éléments de $\Sigma$. Il existe alors des éléments $x_1, \ldots, x_q$ tels que $\Sigma = { x_1, \ldots, x_q }$.
+
+La somme des éléments de $\Sigma$ s'écrit : \\
+[
+\centering
+\sum{x \in \Sigma} x = \sum_{i=1}^{q} x_i.
+]
+\\
+\raggedright
+La somme étant finie, peu importe le sens dont on additionne les éléments la valeur de la somme ne changera pas car \textit{l'addition est commutative}. \\
+
+% Définir un nouveau style pour les définitions
+\newtheoremstyle{bolddef}
+  {\topsep}   % Espace avant
+  {\topsep}   % Espace après
+  {\normalfont}  % Corps de la définition
+  {}          % Indentation (aucune)
+  {\bfseries} % Titre en gras
+  {.}         % Ponctuation après le titre
+  { }         % Espace après le titre
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} % Format du titre
+
+\theoremstyle{bolddef}
+\newtheorem{definition}{Définition} 
+
+\begin{definition}
+Soit $\Sigma$ un sous ensemble de $\[ \mathbb{R} \]$. On dit que $\Sigma$ est sommable et a pour somme $ S \in \[ \mathbb{R} \]$ si pour tout \(\epsilon\) > 0, si il existe une partie finie $\Sigma \(\epsilon\) \subset \Sigma$ telle que pour toute partie finie $\Sigma_0$ telle que $\Sigma \(\epsilon\) \subset \Sigma_0$.\\
+\centering
+\left|{$S-\sum_{x\in \Sigma_0}x$}| \leq \(\epsilon\) \right|
+
+\end{definition}
+\newtheorem{proposition}{Proposition}
+\begin{proposition}
+Soit $(U_n)_{n\in\mathbb{N}}$ une suite dont la série est absolument convergente. Nous allons montrer que $\Sigma$=\{$U_n;n \in \mathbb{N}$\} est sommable et a pour somme S=$\sum_{k=0}^\infty u_k$.\\
+\vspace{3mm}
+Commen\c{c}ons par le cas ou $(U_k) \geq 0$ pour tout $ k \in \mathbb{N}$, tel que : \\
+\centering
+$\lim_{N \to \infty} \sum_{k=0}^N = S$\\
+\raggedright
+pour tout $\(\epsilon\)>0, il existe $N_0 \in \mathbb{N}$ tel que : \\
+\centering
+$|\sum_{k=0}^{N_0} U_k - S| \leq \(\epsilon\)$ \\
+\raggedright
+on sait que comme la série est convergente, le reste converge vers 0 : $R_n = \sum_{k=N+1}^\infty U_k$ vérifie: \\
+\centering
+$\lim_{N \to \infty} R_n = 0$\\
+\raggedright
+Donc $|R_n| \leq \(\epsilon\)$. $ Soit $\Sigma_\(\epsilon\) = \{U_0,...,U_N_0\}$ tel que: \\
+\centering
+$|\sum_{x \in \Sigma_\(\epsilon\)}-S| \leq \(\epsilon\)$ \\
+\raggedright
+Montrons à présent que cela est aussi vrai pour $\Sigma_0 \subset \mathbb{N}$ tel que $\Sigma_0$ est finie et que $\Sigma_\(\epsilon\) \subset \Sigma_0$. $\Sigma_0$ est finie donc il existe $N \in \mathbb{N}$ tel que $\Sigma_0 \subset \{0,1,2,...,N\}$ tel que : \\
+\centering
+$\sum_{k=0}^{N_0} U_k \leq \sum_{x \in \Sigma_0} x \leq \sum_{k=0}^{N} U_k \leq S $\\
+\raggedright
+\vspace{3mm}
+
+A présent montrons cela pour $(U_n)$ de signe quelconque. Soit $\epsilon$ >0,  montrons dans un premier temps quil existe $N_0 \in \mathbb{N}$ tel que: \\
+\centering 
+$\sum_{k=N_0+1}^{\infty} |U_k| \leq \(\epsilon\)$ \\
+
+\raggedright
+\vspace{3mm}
+On sait que $\sum_{k=0}^\infty |U_k|$<+\infty$ car $U_n$ est absolulment convergente. Donc pour tout $N \in \mathbb{N}$ il existe $R_n$ tel que : \\
+\centering
+
+$R_n=\sum_{N+1}^\infty |U_k|$< +$\infty$ \\
+\raggedright
+et $\lim_{n \to \infty} R_n=0$, donc il existe $N_0 \in \mathbb{N}$ tel que $R_n \leq \(\epsilon\)$.$ C'est à dire qu'il existe $N_0 \in \mathbb{N}$ tel que $\sum_{k=N_0+1}^\infty |U_k| \leq 
+\(\epsilon\) $.\\
+\vspace{3mm}
+Montrons à présent que la famille est sommable. Posons $\Sigma_\(\epsilon\)=\{U_k;0 \leq k \leq N_0\}$.\\
+On a donc $U_k$, tel que $\lim_{N \to \infty}  \Sum_{k=0}^{N} U_k}=S\in \mathbb{R}$. Donc il existe $N_1 \in \mathbb{N}$ tel que :\\
+\centering
+|\sum_{k=N_0+1}^{+\infty}-S| \leq \(\epsilon\)\\
+\raggedright
+comme ce sont des sommes finies on en déduit l'égualité suivante : \\
+\centering
+$|\sum_{x \in \Sigma_\(\epsilon\) x|=|\sum_{k=0}^{N_0} U_k - S|=|\sum_{k=N_0+1}^{+\infty} U_k |$\\
+\raggedright 
+comme $\Sigma U_k$ converge absolument :\\
+\centering
+$|\sum_{x \in \Sigma_\(\epsilon\) x|=|\sum_{k=0}^{N_0} U_k - S|=|\sum_{k=N_0+1}^{+\infty} U_k | \leq \sum_{N_0+1}^{+\infty} |U_k| \leq \(\epsilon\)$ $\\
+\raggedright
+soit $\Sigma_0 \subset \Sigma $ finie tel que $\Sigma_\(\epsilon\) \subset \Sigma_0 $ on a :\\
+\centering
+$=|\sum_{x \in \Sigma_0} x -\sum_{k=0}^{N_0} U_k + \sum_{k=0}^{N_0} U_k - S| $\\
+$=|\sum_{x \in {\Sigma_0 \setminus \Sigma_\(\epsilon\)}} x| +\sum_{N_0+1}^{+\infty} |U_k|$\\
+\raggedright
+comme $ \(\sum_{x \in {\Sigma_0 \setminus \Sigma_\(\epsilon\)}}x\) $ $est une somme finie, $U_k$ converge absolument et $\setminus \Sigma_{\(\epsilon\)}~\subset \{U_k;0 \leq k \leq N_0\} $:\\
+\centering
+$|\sum_{x \in \Sigma_\(\epsilon\) x|&=\sum_{k=N_0+1}^{\infty} |U_k| 
++ \sum_{k=N_0+1}^{\infty} |U_k|\\
+=2\sum_{k=N_0+1}^{\infty} U_k \leq 2\(\epsilon\) \\
+=\sum_{k=N_0+1}^{\infty} U_k \leq \epsilon$\\
+\raggedright
+La famille est donc sommable.
+\end{proposition}
+
+\section{Famille sommable et dénombrement}
+\setlength{\parindent}{2em}
+\par Dans cette partie nous allons nous intéresser au dénombrablement des parties sommables et montrer qu'une partie sommable est forcément dénombrable. Pour cela nous allons définir la dénombrabilité en prenant l'exemple de $\mathbb{Z}$ et de $\mathbb{Z}^2$.\\
+\vspace{3mm}
+\begin{proposition}
+Soit $\Sigma$ une partie sommable. Alors il existe A>0 tel que pour toute famille finie $\Sigma_0 \subset \Sigma$:\\
+\centering
+$\sum_{x \in \Sigma_0} |x| \leq A$\\
+\raggedright
+Démontrons cette propriété. On sait que $\Sigma$ est sommable donc il existe $S \in \mathbb{R}$ tel que pour tout $\(\epsilon\)$>0. $ Il existe $\Sigma_\(\epsilon\) \subset \Sigma$ finie tel que pour tout $\Sigma_0$, $\Sigma_\(\epsilon\) \subset \Sigma_0$ tel que : \\
+\centering 
+$|S-\sum_{x \in \Sigma_0} x| \leq \(\epsilon\)$\\
+\raggedright
+fixons $\(\epsilon\)=1 $ $donc $ \exists \Sigma_1 \subset \Sigma$ finie tel que:\\
+\centering
+$|S-\sum_{x \in \Sigma_0} x| \leq 1$\\
+\raggedright
+$\forall \Sigma_0$ tel que $\Sigma_1 \subset \Sigma_0$, $\Sigma_0$ est finie. On a:\\
+\centering 
+$A_0=1+|S|+\sum_{x \in \Sigma_1} |x|$\\
+\raggedright
+Soit $\Sigma_0$ finie :\\
+\centering
+$|S-\sum_{x \in \Sigma_0} x + \sum_{x \in {\Sigma_1 \setminus \Sigma_0}} x |\leq 1$\\
+\raggedright
+Grâce aux inéglités triangulaires, on trouve :\\
+\centering
+$|\sum_{x \in \Sigma_0} x|-|S-\sum_{x \in {\Sigma_1 \setminus \Sigma_0}} x| \leq 1$\\
+\raggedright
+Donc\\
+\centering
+$=|\sum_{x \in \Sigma_0} x| \leq 1+|S-\sum_{x \in {\Sigma_1 \setminus \Sigma_0}} x|$\\
+$|S|+\sum_{x \in {\Sigma_1 \setminus \Sigma_0}} x \leq A_0 $\\
+\end{proposition}
+\vspace{3mm}
+\setlength{\parindent}{2em}
+\raggedright
+\par Intéressons-nous maintenant au dénombrement de $\mathbb{Z}$ et de $\mathbb{Z}^2$. Commen\c{c}ons par une brève définition du dénombrablement pour les ensembles infinis. \\
+\vspace{3mm}
+\begin{definition}
+un ensemble E dénombrable contient autant d’éléments que $\mathbb{N}$, au sens où il est
+possible de faire correspondre bijectivement chaque élément de E avec un élement de $\mathbb{N}$. \textit{Cela peut sembler paradoxal que $\mathbb{Z}$ soit dénombrable mais $\mathbb{Z}$ et $\mathbb{N}$ représente en faite le même infini (de même pour $\mathbb{Q}$)}.\\
+\vspace{3mm}
+Illustrons tout cela avec un schéma: \\
+\vspace{5mm}
+\begin{figure}[h]
+    \centering
+   \includegraphics[width=7.5cm, height=5cm]{bij.PNG}
+    \caption{Bijection de $\mathbb{N}$ dans $\mathbb{Z}$}
+    \label{fig:Code Python.PNG}
+\end{figure}
+\vspace{5mm}
+
+\newpage
+\end{definition}
+Maintenant que la notion de dénombrement est plus claire, montrons qu'une famille sommable $\Sigma$ est forcément dénombrable:\\
+Soit $n \in \mathbb{N}$, et $\Sigma_n=\{x \in \Sigma : |x|>\frac{1}{n} \}$, montrons que $\Sigma_n$ ne peut pas avoir une infinité de nombres positifs ou négatifs. Raisonnons par l'absurde :\\
+
+Il existe A tel que pour tout $\Sigma_0$ finie, \\
+\centering
+$\sum_{x \in \Sigma_0} \leq A $\\
+\raggedright
+Supposons $\Sigma_n$ infini. Pour tout $\Sigma_0$ finie tel que $\Sigma_0 \subset \Sigma_n$, \\
+\centering
+$\sum_{x \in \Sigma_0} \frac{1}{n} \leq \sum_{x \in \Sigma_0} |x|\leq A $\\
+\raggedright
+Or, \\
+\centering
+$\sum_{x \in \Sigma_0} \frac{1}{n}=\frac{card(\Sigma_0)}{n} $ et card($\Sigma_0$)=+$\infty$\\
+\raggedright
+Et A<+$\infty$ donc:\\
+\centering 
+A<$\sum_{x \in \Sigma_0} \frac{1}{n} \leq \sum_{x \in \Sigma_0} |x|\leq A$\\
+\raggedright
+\vspace{3mm}
+On en conclu que c'est absurde et que pour $n \in \mathbb{N}$ $ \Sigma_N$ est finie.\\
+
+Déduisons de cela que $\Sigma$ est dénombrable. 
+on sait que  $\Sigma_n=\{x \in \Sigma : |x|>\frac{1}{n} \}$ et que:
+\[\Sigma = \Sigma_0 \cup \Sigma_1...\cup \Sigma_n\] \\
+$\Sigma$ est donc l'union dénombrable des $\Sigma_n$, $n \in \mathbb{N} $:
+\[\Sigma = \cup_{n \in \mathbb{N}} \Sigma_n\]
+Et les $\Sigma_n$ sont dénombrables donc, par union d'ensemble dénombrable, $\Sigma$ l'est aussi. Pour le cas avec $0 \in \Sigma$:
+\[\Sigma= \{0\} \cup \Sigma_0 \cup \Sigma_1...\cup \Sigma_n\]
+$\{0\}$ est dénombrable donc $\Sigma$ l'est toujours aussi. \\
+\vspace{3mm}
+\newtheorem{remarque}{Remarque}
+\begin{remarque}
+Soit $I=[a,b]$ tel que a<b, I n'est pas dénombrable \textit{(c'est très compliqué a démontrer)}. \\
+\end{remarque}
+\section{Famille sommable $\iff$ convergence absolue}
+\setlength{\parindent}{2em} 
+\subsection{Convergence absolue $\rightarrow$ familles sommables }
+\textit{cf} 1.3 Familles sommables et convergence absolue 
+\subsection{Familles sommables $\rightarrow$ convergence absolue }
+Commen\c{c}ons par un théorème:
+\newtheorem{theoreme}{Theoreme}
+\begin{theoreme}
+Soit $\Sigma = \{U_n; n \in \mathbb{N}\} $ une famille dénombrable. Alors elle est sommable si et seulement si la série de terme général $(U_n)$ est absolument convergente. \\
+
+\end{theoreme}
+Soit $\Sigma$ une partie sommable, il existe A>0 tel que pour toute famille finie $\Sigma_0 \subset \Sigma, $\\
+\[\sum_{x \in \Sigma_0} |x| \leq A \]
+Posons $\Sigma_0 = \{U_0, U_1,.., U_n\} $ donc :
+\[\sum_{x \in \Sigma_0} |x|=\sum_{k=0}^n |U_n| \leq A\]
+\begin{proposition}
+Soit $U_n$ une série avec des termes $\geq 0$ converge si et seulement si ses sommes partielles sont majorée. \\
+\end{proposition}
+Dans notre cas $|U_k| \geq 0, k \in \Sigma_0$ et les sommes partielles de $\Sigma$ sont majorées, donc $(U_n)$ converge absolument. 
+\section{Conclusion}
+Ces démonstrations nous on permis détablir les conclusions suivantes: 
+\begin{itemize}
+\item{Toute famille sommable $\Sigma$ est dénombrable et s'écrit $\Sigma=\{U_n; n \in \mathbb{N}\}$}, pour une certaine suite $U_n, n \in \mathbb{N}$.
+\end{itemize}
+\begin{itemize}
+\item{L'équivalence montrée précédemment : Famille sommable $\iff$ convergence absolue }
+\end{itemize}
+\end{document}
+
+
+
+
+\end{document}
+
+
+
+
+\maketitle
+
+
+\end{document}
